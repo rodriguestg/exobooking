@@ -28,10 +28,11 @@ services:
       WORDPRESS_DB_USER: ${MYSQL_USER}
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
-      WORDPRESS_DEBUG: ${WP_DEBUG}
-      WORDPRESS_DEBUG_LOG: ${WP_DEBUG}
+      WORDPRESS_DEBUG: ${WP_DEBUG:-0}
+      WORDPRESS_DEBUG_LOG: ${WP_DEBUG_LOG:-0}
     volumes:
       - ./wp-content:/var/www/html/wp-content
+      - ./config/apache.conf:/etc/apache2/sites-enabled/000-default.conf
 
   phpmyadmin:
     image: phpmyadmin:latest
