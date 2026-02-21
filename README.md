@@ -173,10 +173,18 @@ Vamos simular 5 tentativas de reserva para um passeio com apenas 3 vagas dispon�
     ```
 
 2.  **Executar o script de concorrência:**
+    No terminal powershell:
+    
     ```powershell
+    # Copia e executa sem saber o ID (lista os disponíveis)
     docker cp tests\concurrency-test.php exobooking_wp:/tmp/concurrency-test.php
-    docker exec exobooking_wp php /tmp/concurrency-test.php 5
+    docker exec exobooking_wp php /tmp/concurrency-test.php
+
+    # Executa com o ID correto
+    docker cp tests\concurrency-test.php exobooking_wp:/tmp/concurrency-test.php
+    docker exec exobooking_wp php /tmp/concurrency-test.php ID_D0_PASSEIO
     ```
+    (Ex.: docker exec exobooking_wp php /tmp/concurrency-test.php 10)
 
 **Resultado esperado:**
 ```text
