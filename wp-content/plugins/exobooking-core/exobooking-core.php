@@ -17,6 +17,7 @@ require_once EXOBOOKING_PATH . 'includes/class-database.php';
 require_once EXOBOOKING_PATH . 'includes/class-post-type.php';
 require_once EXOBOOKING_PATH . 'includes/class-api.php';
 require_once EXOBOOKING_PATH . 'admin/class-admin.php';
+require_once EXOBOOKING_PATH . 'admin/class-meta-box.php';
 
 // ---------------------------------------------------------------
 // ATIVAÇÃO
@@ -44,8 +45,10 @@ register_deactivation_hook( __FILE__, function () {
 // ---------------------------------------------------------------
 // INIT — executa a cada requisição
 // ---------------------------------------------------------------
+
 add_action( 'init', function () {
     ExoBooking_Post_Type::register();
+    ExoBooking_Meta_Box::register();
 
     if ( get_option( 'exobooking_flush_rewrite' ) ) {
         flush_rewrite_rules();

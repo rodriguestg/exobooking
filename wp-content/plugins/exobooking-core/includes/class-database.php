@@ -47,27 +47,50 @@ class ExoBooking_Database {
 
     /**
      * Insere dados de teste para o cenário do overbooking.
-     * Passeio ID 1, dia 20/03/2026, 3 vagas.
+     * Passeio ID dinâmico, dia 20/03/2026, 3 vagas.
      */
     public static function seed_test_data() {
         global $wpdb;
 
         $table = $wpdb->prefix . 'exobooking_inventory';
 
+        // Busca o primeiro passeio cadastrado (dinâmico)
+        $passeio_id = $wpdb->get_var(
+            "SELECT ID FROM {$wpdb->posts}
+            WHERE post_type = 'passeio'
+            AND post_status = 'publish'
+            ORDER BY ID ASC
+            LIMIT 1"
+        );
+
+        // Se não houver passeio publicado, cria um automaticamente
+        if ( ! $passeio_id ) {
+            $passeio_id = wp_insert_post([
+                'post_title'  => 'Trilha da Serra',
+                'post_type'   => 'passeio',
+                'post_status' => 'publish',
+            ]);
+        }
+
+        if ( ! $passeio_id || is_wp_error($passeio_id) ) {
+            return; // Não conseguiu criar, abort silencioso
+        }
+
         // Evita duplicar se já existir
         $exists = $wpdb->get_var( $wpdb->prepare(
             "SELECT id FROM {$table} WHERE passeio_id = %d AND date = %s",
-            1, '2026-03-20'
-        ) );
+            $passeio_id,
+            '2026-03-20'
+        ));
 
         if ( ! $exists ) {
             $wpdb->insert(
                 $table,
                 [
-                    'passeio_id'       => 1,
-                    'date'             => '2026-03-20',
-                    'total_slots'      => 3,
-                    'available_slots'  => 3,
+                    'passeio_id'      => $passeio_id,
+                    'date'            => '2026-03-20',
+                    'total_slots'     => 3,
+                    'available_slots' => 3,
                 ],
                 [ '%d', '%s', '%d', '%d' ]
             );
