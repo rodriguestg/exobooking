@@ -75,8 +75,8 @@ Siga os passos para configurar o ambiente e o plugin:
 
 1.  **Clonar o repositório:**
     ```bash
-    git clone https://github.com/rodriguestg/exobooking-test.git
-    cd exobooking-test
+    git clone https://github.com/rodriguestg/exobooking.git
+    cd exobooking
     
 
 2.  **Criar o arquivo `.env`:**
