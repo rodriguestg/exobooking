@@ -60,8 +60,8 @@ echo "\nDisparando {$total_requests} requisições simultâneas...\n\n";
 
 $payload = json_encode([
     'passeio_id'     => $passeio_id,
-    'customer_name'  => 'Cliente Teste',
-    'customer_email' => 'teste@exobooking.com',
+    'customer_name'  => 'Cliente Teste ' . rand(100, 999),
+    'customer_email' => 'teste' . rand(100, 999) . '@exobooking.com',
     'booking_date'   => '2026-03-20',
     'quantity'       => 1,
 ]);
